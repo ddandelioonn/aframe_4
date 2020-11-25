@@ -36,9 +36,9 @@ AFRAME.registerComponent('info-message', {
   addStyles: function () {
     var css =
       '.a-info-message{border-radius: 10px; position: absolute; width: 400px;' +
-      'height: 250px; background-color: white; border: 3px solid rgba(0,0,0,.75);' +
+      'height: 300px; background-color: white; border: 3px solid rgba(0,0,0,.75);' +
       'bottom: 22px; left: 22px; color: rgb(51, 51, 51); padding: 20px 15px 0 15px;' +
-      'font-size: 12pt; line-height: 20pt;}' +
+      'font-size: 14px; line-height: 20pt;}' +
 
       '.a-info-message a{border-bottom: 1px solid rgba(53,196,232,.15); color: #1497b8;' +
       'position: relative; text-decoration: none; transition: .05s ease;}' +
