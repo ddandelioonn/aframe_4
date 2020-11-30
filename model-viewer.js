@@ -1,6 +1,9 @@
 /* global AFRAME, THREE */
 AFRAME.registerComponent('model-viewer', {
-  schema: {gltfModel: {default: ''}},
+  schema: {
+    gltfModel: {default: ''},
+    title: {default: ''}
+  },
   init: function () {
     var el = this.el;
 
@@ -60,7 +63,7 @@ AFRAME.registerComponent('model-viewer', {
 
     this.modelEl.addEventListener('model-loaded', this.onModelLoaded);
 
-    if (AFRAME.utils.device.isLandscape()) { this.modelEl.object3D.position.z += 1; }
+    if (AFRAME.utils.device.isLandscape()) { this.containerEl.object3D.position.z += 1; }
   },
 
   initUploadInput: function () {
@@ -73,6 +76,8 @@ AFRAME.registerComponent('model-viewer', {
       'bottom: 20px; left: calc(50% - 300px); position: absolute; color: white;' +
       'font-size: 12px; line-height: 12px; border: none;' +
       'border-radius: 5px}' +
+      '@media only screen and (max-width: 600px) {' +
+      '.a-upload-model {display: none}}' +
       '.a-upload-model-button {cursor: pointer; padding: 0px 2px 0 2px; font-weight: bold; color: #666; border: 3px solid #666; box-sizing: border-box; vertical-align: middle; width: 110px; border-radius: 10px; height: 34px; background-color: white; margin: 0;}' +
       '.a-upload-model-button:hover {border-color: #ef2d5e; color: #ef2d5e}' +
       '.a-upload-model-input {color: #666; vertical-align: middle; padding: 0px 10px 0 10px; text-transform: uppercase; border: 0; width: 75%; height: 100%; border-radius: 10px; margin-right: 10px}';
@@ -98,6 +103,7 @@ AFRAME.registerComponent('model-viewer', {
       if (this.value) { return; }
       this.value = inputDefaultValue;
     };
+
     inputEl.value = inputDefaultValue;
 
     uploadContainerEl.appendChild(inputEl);
@@ -216,11 +222,11 @@ AFRAME.registerComponent('model-viewer', {
     modelPivotEl.appendChild(arShadowEl);
 
     titleEl.id = 'title';
-    titleEl.setAttribute('text', 'value: Triceratops; width: 6');
+    titleEl.setAttribute('text', 'value: ' + this.data.title + '; width: 6');
     titleEl.setAttribute('hide-on-enter-ar', '');
     titleEl.setAttribute('visible', 'false');
 
-    this.el.sceneEl.appendChild(titleEl);
+    this.containerEl.appendChild(titleEl);
 
     lightEl.setAttribute('position', '-2 4 2');
     lightEl.setAttribute('light', {
@@ -281,9 +287,9 @@ AFRAME.registerComponent('model-viewer', {
 
   onOrientationChange: function () {
     if (AFRAME.utils.device.isLandscape()) {
-      this.modelEl.object3D.position.z += 1;
+      this.containerEl.object3D.position.z += 1;
     } else {
-      this.modelEl.object3D.position.z -= 1;
+      this.containerEl.object3D.position.z -= 1;
     }
   },
 
@@ -462,7 +468,7 @@ AFRAME.registerComponent('model-viewer', {
     shadowEl.object3D.position.x = -center.x;
 
     titleEl.object3D.position.x = 2.2 - center.x;
-    titleEl.object3D.position.y = size.y + 0.3;
+    titleEl.object3D.position.y = size.y + 0.5;
     titleEl.object3D.position.z = -2;
     titleEl.object3D.visible = true;
 
