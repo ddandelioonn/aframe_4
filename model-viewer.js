@@ -289,11 +289,10 @@ AFRAME.registerComponent('model-viewer', {
   },
 
   onOrientationChange: function () {
-    if (!this.cameraRigEl) { return; }
     if (AFRAME.utils.device.isLandscape()) {
-      this.cameraRigEl.object3D.position.z = 2;
+      this.cameraRigEl.object3D.position.z -= 1;
     } else {
-      this.cameraRigEl.object3D.position.z = -1;
+      this.cameraRigEl.object3D.position.z += 1;
     }
   },
 
@@ -450,7 +449,7 @@ AFRAME.registerComponent('model-viewer', {
 
     modelEl.object3D.position.set(0, 0, 0);
     modelEl.object3D.scale.set(1.0, 1.0, 1.0);
-    //this.cameraRigEl.object3D.position.z = 0;
+    this.cameraRigEl.object3D.position.z = 0;
 
     modelEl.object3D.updateMatrixWorld();
     box = new THREE.Box3().setFromObject(gltfObject);
@@ -482,7 +481,7 @@ AFRAME.registerComponent('model-viewer', {
     modelEl.object3D.position.y = -center.y;
     modelEl.object3D.position.z = -center.z;
 
-    if (AFRAME.utils.device.isLandscape()) { this.cameraRigEl.object3D.position.z = 1; }
+    if (AFRAME.utils.device.isLandscape()) { this.cameraRigEl.object3D.position.z -= 1; }
   },
 
   onMouseDown: function (evt) {
