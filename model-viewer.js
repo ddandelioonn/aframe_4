@@ -72,15 +72,18 @@ AFRAME.registerComponent('model-viewer', {
     var submitButtonEl = this.submitButtonEl = document.createElement('button');
     var style = document.createElement('style');
     var css =
-      '.a-upload-model  {width: 600px; height: 34px; padding: 0;' +
-      'bottom: 20px; left: calc(50% - 300px); position: absolute; color: white;' +
-      'font-size: 12px; line-height: 12px; border: none;' +
+      '.a-upload-model  {box-sizing: border-box; display: inline-block; height: 34px; padding: 0; width: 70%;' +
+      'bottom: 20px; left: 15%; right: 15%; position: absolute; color: white;' +
+      'font-size: 12px; line-height: 12px; border: none; vertical-align: middle;' +
       'border-radius: 5px}' +
-      '@media only screen and (max-width: 600px) {' +
-      '.a-upload-model {display: none}}' +
-      '.a-upload-model-button {cursor: pointer; padding: 0px 2px 0 2px; font-weight: bold; color: #666; border: 3px solid #666; box-sizing: border-box; vertical-align: middle; width: 110px; border-radius: 10px; height: 34px; background-color: white; margin: 0;}' +
+      '.a-upload-model-button {cursor: pointer; padding: 0px 2px 0 2px; font-weight: bold; color: #666; border: 3px solid #666; box-sizing: border-box; vertical-align: middle; width: 25%; max-width: 110px; border-radius: 10px; height: 34px; background-color: white; margin: 0;}' +
       '.a-upload-model-button:hover {border-color: #ef2d5e; color: #ef2d5e}' +
-      '.a-upload-model-input {color: #666; vertical-align: middle; padding: 0px 10px 0 10px; text-transform: uppercase; border: 0; width: 75%; height: 100%; border-radius: 10px; margin-right: 10px}';
+      '.a-upload-model-input {color: #666; vertical-align: middle; padding: 0px 10px 0 10px; text-transform: uppercase; border: 0; width: 75%; height: 100%; border-radius: 10px; margin-right: 10px}' +
+        '@media only screen and (max-width: 800px) {' +
+      '.a-upload-model {width: 80%; left: 100px;}' +
+      '.a-upload-model-input {width: 40%;}}' +
+      '@media only screen and (max-width: 600px) {' +
+      '.a-upload-model {display: none}}';
     var inputDefaultValue = 'Copy URL to glTF or glb model';
     uploadContainerEl.classList.add('a-upload-model');
     if (style.styleSheet) {
