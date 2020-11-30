@@ -62,8 +62,6 @@ AFRAME.registerComponent('model-viewer', {
     this.el.sceneEl.addEventListener('exit-vr', this.onExitVR);
 
     this.modelEl.addEventListener('model-loaded', this.onModelLoaded);
-
-    if (AFRAME.utils.device.isLandscape()) { this.containerEl.object3D.position.z += 1; }
   },
 
   initUploadInput: function () {
@@ -84,7 +82,7 @@ AFRAME.registerComponent('model-viewer', {
       '.a-upload-model-input {width: 70%;}}' +
       '@media only screen and (max-width: 700px) {' +
       '.a-upload-model {display: none}}';
-    var inputDefaultValue = 'Copy URL to glTF or glb model';
+    var inputDefaultValue = this.inputDefaultValue = 'Copy URL to glTF or glb model';
     uploadContainerEl.classList.add('a-upload-model');
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -116,11 +114,13 @@ AFRAME.registerComponent('model-viewer', {
   },
 
   update: function () {
+    if (!this.data.gltfModel) { return; }
     this.modelEl.setAttribute('gltf-model', this.data.gltfModel);
   },
 
   submitURLButtonClicked: function (evt) {
     var modelURL = this.inputEl.value;
+    if (modelURL === this.inputDefaultValue) { return; }
     this.el.setAttribute('model-viewer', 'gltfModel', modelURL);
   },
 
@@ -478,6 +478,8 @@ AFRAME.registerComponent('model-viewer', {
     modelEl.object3D.position.x = -center.x;
     modelEl.object3D.position.y = -center.y;
     modelEl.object3D.position.z = -center.z;
+
+    if (AFRAME.utils.device.isLandscape()) { this.containerEl.object3D.position.z += 1; }
   },
 
   onMouseDown: function (evt) {
