@@ -201,7 +201,7 @@ AFRAME.registerComponent('model-viewer', {
     laserHitPanelEl.setAttribute('visible', 'false');
     laserHitPanelEl.classList.add('raycastable');
 
-    modelPivotEl.appendChild(laserHitPanelEl);
+    this.containerEl.appendChild(laserHitPanelEl);
 
     modelEl.setAttribute('rotation', '0 -30 0');
     modelEl.setAttribute('animation-mixer', '');
@@ -328,6 +328,7 @@ AFRAME.registerComponent('model-viewer', {
     this.cameraRigRotation = cameraRigEl.object3D.rotation.clone();
 
     cameraRigEl.object3D.rotation.set(0, 0, 0);
+    cameraRigEl.object3D.position.set(0, 0, 2);
   },
 
   onExitVR: function () {
