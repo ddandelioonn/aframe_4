@@ -327,7 +327,6 @@ AFRAME.registerComponent('model-viewer', {
     this.cameraRigPosition = cameraRigEl.object3D.position.clone();
     this.cameraRigRotation = cameraRigEl.object3D.rotation.clone();
 
-    cameraRigEl.object3D.position.set(0, 0, 0);
     cameraRigEl.object3D.rotation.set(0, 0, 0);
   },
 
@@ -442,14 +441,13 @@ AFRAME.registerComponent('model-viewer', {
     var center;
     var scale;
     var modelEl = this.modelEl;
-    var modelPivotEl = this.modelPivotEl;
     var shadowEl = this.shadowEl;
     var titleEl = this.titleEl;
     var gltfObject = modelEl.getObject3D('mesh');
 
     modelEl.object3D.position.set(0, 0, 0);
     modelEl.object3D.scale.set(1.0, 1.0, 1.0);
-    this.cameraRigEl.object3D.position.z = 0;
+    this.cameraRigEl.object3D.position.z = 3.0;
 
     modelEl.object3D.updateMatrixWorld();
     box = new THREE.Box3().setFromObject(gltfObject);
