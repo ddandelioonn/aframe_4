@@ -130,8 +130,6 @@ AFRAME.registerComponent('model-viewer', {
     var rightHandEl = this.rightHandEl = document.createElement('a-entity');
     var leftHandEl = this.leftHandEl = document.createElement('a-entity');
 
-    cameraRigEl.setAttribute('position', '0 0 3.0');
-
     cameraEl.setAttribute('camera', {fov: 60});
     cameraEl.setAttribute('look-controls', {
       magicWindowTrackingEnabled: false,
@@ -328,7 +326,7 @@ AFRAME.registerComponent('model-viewer', {
     this.cameraRigRotation = cameraRigEl.object3D.rotation.clone();
 
     cameraRigEl.object3D.rotation.set(0, 0, 0);
-    cameraRigEl.object3D.position.set(0, 0, 2);
+    cameraRigEl.object3D.position.set(0, 0, 3);
   },
 
   onExitVR: function () {
@@ -448,7 +446,7 @@ AFRAME.registerComponent('model-viewer', {
 
     modelEl.object3D.position.set(0, 0, 0);
     modelEl.object3D.scale.set(1.0, 1.0, 1.0);
-    this.cameraRigEl.object3D.position.z = 3.0;
+    this.cameraRigEl.object3D.position.z = 3;
 
     modelEl.object3D.updateMatrixWorld();
     box = new THREE.Box3().setFromObject(gltfObject);
