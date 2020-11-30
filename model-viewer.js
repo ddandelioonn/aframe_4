@@ -326,7 +326,7 @@ AFRAME.registerComponent('model-viewer', {
     this.cameraRigRotation = cameraRigEl.object3D.rotation.clone();
 
     cameraRigEl.object3D.rotation.set(0, 0, 0);
-    cameraRigEl.object3D.position.set(0, 0, 3);
+    cameraRigEl.object3D.position.set(0, 0, 2);
   },
 
   onExitVR: function () {
@@ -446,7 +446,7 @@ AFRAME.registerComponent('model-viewer', {
 
     modelEl.object3D.position.set(0, 0, 0);
     modelEl.object3D.scale.set(1.0, 1.0, 1.0);
-    this.cameraRigEl.object3D.position.z = 3;
+    this.cameraRigEl.object3D.position.z = 3.0;
 
     modelEl.object3D.updateMatrixWorld();
     box = new THREE.Box3().setFromObject(gltfObject);
@@ -454,8 +454,8 @@ AFRAME.registerComponent('model-viewer', {
 
     // Human scale.
     scale = 1.6 / size.y;
-    //scale = 2.0 / size.x < scale ? 2.0 / size.x : scale;
-    //scale = 2.0 / size.z < scale ? 2.0 / size.z : scale;
+    scale = 2.0 / size.x < scale ? 2.0 / size.x : scale;
+    scale = 2.0 / size.z < scale ? 2.0 / size.z : scale;
 
     modelEl.object3D.scale.set(scale, scale, scale);
     modelEl.object3D.updateMatrixWorld();
