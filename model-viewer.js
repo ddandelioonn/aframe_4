@@ -340,7 +340,7 @@ AFRAME.registerComponent('model-viewer', {
 
   onTouchMove: function (evt) {
     if (evt.touches.length === 1) { this.onSingleTouchMove(evt); }
-    if (evt.touches.length === 2) { this.onPinchMove(evt); }
+    //if (evt.touches.length === 2) { this.onPinchMove(evt); }
   },
 
   onSingleTouchMove: function (evt) {
@@ -442,12 +442,16 @@ AFRAME.registerComponent('model-viewer', {
     var center;
     var scale;
     var modelEl = this.modelEl;
+    var modelPivotEl = this.modellPivotEl;
     var shadowEl = this.shadowEl;
     var titleEl = this.titleEl;
     var gltfObject = modelEl.getObject3D('mesh');
 
+    //modelPivotEl.object3D.rotation.set(0, 0, 0);
+    //modelPivotEl.object3D.position.set(0, 0, 0);
     modelEl.object3D.position.set(0, 0, 0);
     modelEl.object3D.scale.set(1.0, 1.0, 1.0);
+    this.containerEl.object3D.position.z = 0;
 
     modelEl.object3D.updateMatrixWorld();
     box = new THREE.Box3().setFromObject(gltfObject);
