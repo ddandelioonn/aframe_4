@@ -35,9 +35,9 @@ AFRAME.registerComponent('model-viewer', {
 
     this.onOrientationChange = this.onOrientationChange.bind(this);
 
+    this.initCameraRig();
     this.initEntities();
     this.initBackground();
-    this.initCameraRig();
 
     if (this.data.uploadUIEnabled) { this.initUploadInput(); }
 
@@ -79,6 +79,7 @@ AFRAME.registerComponent('model-viewer', {
       'bottom: 20px; left: 15%; right: 15%; position: absolute; color: white;' +
       'font-size: 12px; line-height: 12px; border: none;' +
       'border-radius: 5px}' +
+      '.a-upload-model.hidden {display: none}' +
       '.a-upload-model-button {cursor: pointer; padding: 0px 2px 0 2px; font-weight: bold; color: #666; border: 3px solid #666; box-sizing: border-box; vertical-align: middle; width: 25%; max-width: 110px; border-radius: 10px; height: 34px; background-color: white; margin: 0;}' +
       '.a-upload-model-button:hover {border-color: #ef2d5e; color: #ef2d5e}' +
       '.a-upload-model-input {color: #666; vertical-align: middle; padding: 0px 10px 0 10px; text-transform: uppercase; border: 0; width: 75%; height: 100%; border-radius: 10px; margin-right: 10px}' +
@@ -115,6 +116,13 @@ AFRAME.registerComponent('model-viewer', {
       if (this.value) { return; }
       this.value = inputDefaultValue;
     };
+
+    this.el.sceneEl.addEventListener('infomessageopened', function () {
+      uploadContainerEl.classList.add('hidden');
+    });
+    this.el.sceneEl.addEventListener('infomessageclosed', function () {
+      uploadContainerEl.classList.remove('hidden');
+    });
 
     inputEl.value = inputDefaultValue;
 
@@ -204,6 +212,8 @@ AFRAME.registerComponent('model-viewer', {
       intensity: 1
     });
 
+    modelPivotEl.id = 'modelPivot';
+
     this.el.appendChild(sceneLightEl);
 
     reticleEl.setAttribute('gltf-model', '#reticle');
@@ -250,6 +260,7 @@ AFRAME.registerComponent('model-viewer', {
 
     this.containerEl.appendChild(titleEl);
 
+    lightEl.id = 'light';
     lightEl.setAttribute('position', '-2 4 2');
     lightEl.setAttribute('light', {
       type: 'directional',
@@ -268,6 +279,7 @@ AFRAME.registerComponent('model-viewer', {
     this.containerEl.appendChild(modelPivotEl);
 
     this.el.appendChild(containerEl);
+    this.el.appendChild(reticleEl);
   },
 
   onThumbstickMoved: function (evt) {
@@ -346,8 +358,12 @@ AFRAME.registerComponent('model-viewer', {
     this.cameraRigPosition = cameraRigEl.object3D.position.clone();
     this.cameraRigRotation = cameraRigEl.object3D.rotation.clone();
 
-    cameraRigEl.object3D.rotation.set(0, 0, 0);
-    cameraRigEl.object3D.position.set(0, 0, 2);
+    debugger;
+    if (!this.el.sceneEl.is('ar-mode')) {
+      cameraRigEl.object3D.position.set(0, 0, 2);
+    } else {
+      cameraRigEl.object3D.position.set(0, 0, 0);
+    }
   },
 
   onExitVR: function () {
@@ -355,6 +371,8 @@ AFRAME.registerComponent('model-viewer', {
 
     cameraRigEl.object3D.position.copy(this.cameraRigPosition);
     cameraRigEl.object3D.rotation.copy(this.cameraRigRotation);
+
+    cameraRigEl.object3D.rotation.set(0, 0, 0);
   },
 
   onTouchMove: function (evt) {
